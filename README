@@ -1,0 +1,8 @@
+# lpsh
+
+Yet another shell
+
+## Compile
+
+	make all
+	./lpsh
