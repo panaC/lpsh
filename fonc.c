@@ -19,15 +19,12 @@
  */
 pid_t create_process(void)
 {
-    /* On crée une nouvelle valeur de type pid_t */
-    pid_t pid;
+    pid_t pid; //New pid
 
-    /* On fork() tant que l'erreur est EAGAIN */
     do {
 		pid = fork();
     } while ((pid == -1) && (errno == EAGAIN));
 
-    /* On retourne le PID du processus ainsi créé */
     return pid;
 }
 
@@ -78,11 +75,11 @@ int sh_getLine(char **str){
 		 if( (i+1) >= (j*ALLOC_MEMORY)) {
 			 j++;
 			 tstr = (char*) realloc(*str, j*ALLOC_MEMORY * sizeof(char));
-			if(tstr == NULL) {
-				perror("Err : realloc getLine");
-			} else {
-				*str = tstr;
-			}
+			 if(tstr == NULL) {
+				 perror("Err : realloc getLine");
+			 } else {
+				 *str = tstr;
+			 }
 		 }
 	}
 	
@@ -162,6 +159,7 @@ int sh_getArgs(char **in, char ***out){
  * \brief Fonction d'éxecution de la commande et de ces arguments
  *
  * \param args Tableau de string comprenant la commmande et les arguments
+ * 		  pid  Pointeur de type pid_t contenant le pid précédent
  *
  * \return 0 OK 
  */

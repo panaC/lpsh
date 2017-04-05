@@ -4,7 +4,7 @@ CFLAGS=-Wall -Wextra -Werror
 LDFLAGS=-g
 EXEC=lpsh
 
-all: mrproper lpsh
+all: mrproper lpsh clean
 
 lpsh: fonc.o main.o
 	$(CC) -o $(EXEC) fonc.o main.o $(LDFLAGS)
