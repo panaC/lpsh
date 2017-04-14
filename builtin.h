@@ -14,5 +14,9 @@ int bi_hello(char ***args);
 
 int bi_cd(char ***args);
 
+int bi_env(char ***args);
+
+int bi_exit(char ***args);
+
 #endif
 

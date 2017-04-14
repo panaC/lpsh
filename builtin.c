@@ -46,4 +46,22 @@ int bi_cd(char ***args){
 	return 0;
 }
 
+int bi_env(char ***args){
+	
+	int count = 0;
+	args=args; //Not Used
+	while(environ[count] != NULL)
+	{
+		printf("%s\n", environ[count]);
+		count++;
+	}
 
+	return (0);
+}
+
+int bi_exit(char ***args){
+
+	args=args; //Not Used
+	sh_quit();
+	return (0);
+}
