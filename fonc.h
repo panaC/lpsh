@@ -43,11 +43,11 @@ int sh_getLine(char **str);
 
 int sh_getArgs(char **in, char ***out);
 
-int sh_exec(char ***args, pid_t *pid);
-
-int sh_execBuiltin(char ***args);
+int sh_exec(char ***args);
 
 int sh_parseCaractere(char *line);
+
+int (* sh_searchFtExec(char ***args))(char***);
 
 //
 
@@ -57,7 +57,7 @@ int sh_parseCaractere(char *line);
 
 /* -----------------*/
 /**
- * \brief Variable d'environnement globale
+ * \brief Variable d'environnement glob
  */
 /* -----------------*/
 extern char **environ;

@@ -8,6 +8,20 @@
  */
 
 #include "fonc.h"
+#include "builtin.c"
+
+
+/* -----------------*/
+/**
+ * \brief Tableau Globale Built-in
+ */
+/* -----------------*/
+//Nom des fonction Built-in
+char t_strBuiltin[2][100] = {	{"hello"}, 
+								{"cd"}};
+//Déclaration du tableau de fonction builtin
+//En concordance avec le tableau ci-dessus
+int (* t_ftBuiltin[2])(char***) = {bi_hello, bi_cd};
 
 /**
  * \brief Crée un processus en dupplicant le processus appelant
@@ -45,7 +59,7 @@ void sh_quit(){
  */
 /* -----------------*/
 void sh_prompt(void){
-	write(1, "$>", 2);	
+	write(1, "$> ", 3);	
 }
 
 /* -----------------*/
@@ -164,18 +178,19 @@ int sh_getArgs(char **in, char ***out){
  * \return 0 OK 
  */
 /* -----------------*/
-int sh_exec(char ***args, pid_t *pid){
+int sh_exec(char ***args){
 
 	int status = 0;
+	static pid_t pid;
 
 	if((*args)[0] == NULL){
-		return 1;
+		return -1; //Code de retour pas de commande
 		
 	} else {
 		
-		*pid = create_process();
+		pid = create_process();
 
-		switch (*pid) {
+		switch (pid) {
 		case -1:
 			//Erreur
 			perror("fork");
@@ -205,17 +220,29 @@ int sh_exec(char ***args, pid_t *pid){
 
 /* -----------------*/
 /**
- * \brief Fonction d'éxecution Builtin shell
+ * \brief Fonction qui retourne une fonction à éxécuter correspndant à la commande entré.
  *
  * \param args Tableau de string comprenant la commmande et les arguments
  *
- * \return (-1) commande inconnu
- * \return (0) OK
+ * \return fonction d'éxécution de la commande Builtin
+ * \return fonction sh_exec qui recherche dans le path la commande
  */
 /* -----------------*/
-int sh_execBuiltin(char ***args){
+int (* sh_searchFtExec(char ***args))(char***){
+
+	//Recherche la fonction builtin dans args 
+	//retourne la fonction correspondante
+	//sinon renvoie sh_exec path
 	
-	args = args; //Not used	
+	if((*args)[0] == NULL){
+		return sh_exec;
+	}
 	
-	return (-1); //Return -1 si commande inconnu sinon 0
+	for(int i = 0; i < 2; i++){
+		if(strcmp(**args, t_strBuiltin[i]) == 0){
+			return t_ftBuiltin[i];
+		} 
+	}
+	return sh_exec;
 }
+

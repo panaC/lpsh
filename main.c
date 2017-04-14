@@ -44,19 +44,14 @@ int main(int argc, char **argv)
 	char *tstr = NULL;
 	char tmp[3];
 
-//	int retExec = 0;
+	int retExec = 0;
 	int nbAllocMemoryLine = 1;
 	int lenLine = 0;
 	int b_notAction = 0;
 	int b_exit = 0;
 
 	int dup_in = dup(STDIN_FILENO);
-	//int dup_in2 = dup(0);
-	//dup_tmp = open("/dev/fd/0", O_RDONLY);
-	
-	pid_t pid;
 
-	pid = 0;
 	line = NULL;
 	argArray = NULL;
 	errno = 0;
@@ -139,8 +134,11 @@ int main(int argc, char **argv)
 		//execute action
 		sh_getArgs(&line, &argArray);
 
-		sh_exec(&argArray, &pid); //Gérer dabord les builtins
+		retExec = (sh_searchFtExec(&argArray))(&argArray);
+		//sh_exec(&argArray); //Gérer dabord les builtins
 								  //puis le path
+		retExec = retExec; //Not Used
+
 		free(argArray);
 		argArray = NULL;
 
