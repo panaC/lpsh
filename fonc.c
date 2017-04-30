@@ -10,7 +10,7 @@
 #include "fonc.h"
 #include "builtin.c"
 
-#define NBBUILTIN 4
+#define NBBUILTIN 6
 
 /* -----------------*/
 /*
@@ -21,13 +21,17 @@
 char t_strBuiltin[NBBUILTIN][100] = {	{"hello"}, 
 										{"cd"},
 										{"env"},
-										{"exit"}};
+										{"exit"},
+										{"setenv"},
+										{"unsetenv"}};
 //Déclaration du tableau de fonction builtin
 //En concordance avec le tableau ci-dessus
 int (* t_ftBuiltin[NBBUILTIN])(char***) = {bi_hello, 
 											bi_cd,
 											bi_env,
-											bi_exit};
+											bi_exit,
+											bi_setenv,
+											bi_unsetenv};
 
 /**
  * \brief Crée un processus en dupplicant le processus appelant
@@ -236,7 +240,7 @@ int sh_exec(char ***args){
 /* -----------------*/
 int (* sh_searchFtExec(char ***args))(char***){
 
-	//Recherche la fonction builtin dans args 
+	//Recherche la fonction builtin ans args 
 	//retourne la fonction correspondante
 	//sinon renvoie sh_exec path
 	

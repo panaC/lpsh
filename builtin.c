@@ -65,3 +65,29 @@ int bi_exit(char ***args){
 	sh_quit();
 	return (0);
 }
+
+int bi_setenv(char ***args){
+
+	char ar1[100];
+	char ar2[100];
+
+	if((*args)[1] == NULL || (*args)[2] == NULL)
+		return (1);
+	printf("args1 : %s\n", (*args)[1]);
+	printf("args2 : %s\n", (*args)[2]);
+
+	strncpy(ar1, (*args[1]), 100);
+	strncpy(ar2, (*args[2]), 100);
+	setenv(ar1, ar2, 1); 
+
+	return (0);
+}
+
+int bi_unsetenv(char ***args){
+
+	if((*args)[1] == NULL) 
+		return (1);
+	unsetenv((*args)[1]);
+
+	return (0);
+}

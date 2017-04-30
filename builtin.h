@@ -18,5 +18,9 @@ int bi_env(char ***args);
 
 int bi_exit(char ***args);
 
+int bi_setenv(char ***args);
+
+int bi_unsetenv(char ***args);
+
 #endif
 
